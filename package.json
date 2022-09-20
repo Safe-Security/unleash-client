@@ -1,0 +1,22 @@
+{
+  "name": "@safe-security/unleash",
+  "version": "1.0.14",
+  "description": "\"Fearure toggle logging framework in SAFE\"",
+  "main": "lib/index.js",
+  "types": "lib",
+  "files": [
+    "lib/**/*"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": "https://github.com/Safe-Security/unleash-client.git",
+  "author": "Aniket D. Giri <aniket.g@safe.security>",
+  "license": "MIT",
+  "dependencies": {
+    "unleash-client": "^3.15.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.3"
+  }
+}
