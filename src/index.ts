@@ -24,19 +24,18 @@ class BaseUrlStrategy extends Strategy {
     }
 }
 
-function getInstance(obj: configParams) {
+const getInstance = (config: configParams) => {
+    const { unleashServerUrl, baseUrl, unleashClientApiKey } = config;
     const unleash = initialize({
-        url: obj.unleashServerUrl,
-        appName: new URL(obj.baseUrl).hostname,
-        strategies: [new BaseUrlStrategy(obj.baseUrl)],
+        url: unleashServerUrl,
+        appName: new URL(baseUrl).hostname,
+        strategies: [new BaseUrlStrategy(baseUrl)],
         //Extra parameter is added as a part of reusing the HTTP connection.
         httpOptions: { agent: url => new Agent({ keepAlive: true }) },
         customHeaders: {
-            Authorization: obj.unleashClientApiKey,
+            Authorization: unleashClientApiKey,
         },
     });
-
     return unleash;
-}
-
+};
 export default getInstance;
