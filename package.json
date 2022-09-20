@@ -1,6 +1,6 @@
 {
-  "name": "@safe-security/unleash",
-  "version": "1.0.14",
+  "name": "unleash-client-safe-security",
+  "version": "1.0.16",
   "description": "\"Fearure toggle logging framework in SAFE\"",
   "main": "lib/index.js",
   "types": "lib",
