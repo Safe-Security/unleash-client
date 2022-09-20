@@ -1,5 +1,12 @@
-import { Agent } from "http";
+import { Agent } from "https";
+
 import { Strategy, initialize, isEnabled, Unleash } from "unleash-client";
+
+interface configParams {
+    readonly unleashServerUrl: string;
+    readonly baseUrl: string;
+    readonly unleashClientApiKey: string;
+}
 class BaseUrlStrategy extends Strategy {
     baseUrl: string;
     constructor(baseUrl: string) {
@@ -11,31 +18,24 @@ class BaseUrlStrategy extends Strategy {
         const allowedList = new Set(
             parameters.baseUrl.split(",").map(url => url.trim().toLowerCase())
         );
-        const url = (this.baseUrl as string).toLowerCase();
+        const url = this.baseUrl.toLowerCase();
         const { hostname } = new URL(url);
         return allowedList.has(url) || allowedList.has(hostname);
     }
 }
 
-function getInstance(
-    unleashServerUrl?: string,
-    baseUrl?: string,
-    unleashClientApiKey?: string
-) {
-    const unleash =
-        !!unleashServerUrl && !!unleashClientApiKey
-            ? initialize({
-                  url: unleashServerUrl,
-                  appName: new URL(baseUrl as string).hostname,
-                  instanceId: "1",
-                  strategies: [new BaseUrlStrategy(baseUrl as string)],
-                  //Extra parameter is added as a part of reusing the HTTP connection.
-                  httpOptions: { agent: url => new Agent({ keepAlive: true }) },
-                  customHeaders: {
-                      Authorization: unleashClientApiKey,
-                  },
-              })
-            : null;
+function getInstance(obj: configParams) {
+    const unleash = initialize({
+        url: obj.unleashServerUrl,
+        appName: new URL(obj.baseUrl).hostname,
+        strategies: [new BaseUrlStrategy(obj.baseUrl)],
+        //Extra parameter is added as a part of reusing the HTTP connection.
+        httpOptions: { agent: url => new Agent({ keepAlive: true }) },
+        customHeaders: {
+            Authorization: obj.unleashClientApiKey,
+        },
+    });
+
     return unleash;
 }
 
