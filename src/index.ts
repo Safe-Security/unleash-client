@@ -2,7 +2,7 @@ import { Agent } from "https";
 
 import { Strategy, initialize, isEnabled, Unleash } from "unleash-client";
 
-interface configParams {
+interface ConfigParams {
     readonly unleashServerUrl: string;
     readonly baseUrl: string;
     readonly unleashClientApiKey: string;
@@ -24,13 +24,13 @@ class BaseUrlStrategy extends Strategy {
     }
 }
 
-const getInstance = (config: configParams) => {
+const getInstance = (config: ConfigParams) => {
     const { unleashServerUrl, baseUrl, unleashClientApiKey } = config;
     const unleash = initialize({
         url: unleashServerUrl,
         appName: new URL(baseUrl).hostname,
         strategies: [new BaseUrlStrategy(baseUrl)],
-        //Extra parameter is added as a part of reusing the HTTP connection.
+        //to leverage reuse of HTTP connections
         httpOptions: { agent: url => new Agent({ keepAlive: true }) },
         customHeaders: {
             Authorization: unleashClientApiKey,
