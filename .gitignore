@@ -52,4 +52,4 @@ node_modules/
 # transpiled build files
 build/
 dist/
-lib/
+# lib/

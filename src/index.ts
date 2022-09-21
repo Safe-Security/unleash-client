@@ -24,7 +24,7 @@ class BaseUrlStrategy extends Strategy {
     }
 }
 
-const getInstance = (config: ConfigParams): Unleash => {
+export const getInstance = (config: ConfigParams): Unleash => {
     const { unleashServerUrl, baseUrl, unleashClientApiKey } = config;
     const unleash = initialize({
         url: unleashServerUrl,
@@ -38,4 +38,3 @@ const getInstance = (config: ConfigParams): Unleash => {
     });
     return unleash;
 };
-export default getInstance;
