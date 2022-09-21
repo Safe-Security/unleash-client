@@ -12,6 +12,7 @@
         "build": "tsc"
     },
     "dependencies": {
+        "https": "^1.0.0",
         "unleash-client": "^3.15.0"
     },
     "devDependencies": {
