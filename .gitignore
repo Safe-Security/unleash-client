@@ -53,3 +53,5 @@ node_modules/
 build/
 dist/
 # lib/
+
+README.md
