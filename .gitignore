@@ -53,6 +53,3 @@ node_modules/
 build/
 dist/
 lib/
-
-# Mac hidden files
-.DS_Store
