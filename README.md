@@ -27,8 +27,8 @@ In Javascript:
 const { getInstance } = require("unleash-client-safe-security");
 
 const unleash = getInstance({
-    unleashServerUrl: "http://unleash.herokuapp.com/api",
-    baseUrl: "https://example.safescore.io",
+    unleashServerUrl: <unleash-url>,
+    baseUrl: <app-url>,
     unleashClientApiKey: "zaCELgL.0imfnc8mVLWwsAawjYr4Rx-Af50DDqtlx",
 });
 ```
@@ -39,8 +39,8 @@ In Typescript:
 import { getInstance } from "unleash-client-safe-security";
 
 const unleash = getInstance({
-    unleashServerUrl: "http://unleash.herokuapp.com/api",
-    baseUrl: "https://example.safescore.io",
+  unleashServerUrl: <unleash-url>,
+    baseUrl: <app-url>,
     unleashClientApiKey: "zaCELgL.0imfnc8mVLWwsAawjYr4Rx-Af50DDqtlx",
 });
 ```
