@@ -3,10 +3,6 @@
     "version": "1.0.0",
     "description": "Unleash Client for Safe Security",
     "main": "lib/index.js",
-    "types": "lib",
-    "files": [
-        "lib/**/*"
-    ],
     "repository": "git@github.com:Safe-Security/unleash-client.git",
     "author": "Aneesh Relan <aneesh.relan@gmail.com>",
     "license": "MIT",
