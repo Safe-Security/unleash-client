@@ -26,12 +26,12 @@ class BaseUrlStrategy extends Strategy {
 
 export const getInstance = (
     config: ConfigParams,
-    poll_interval: number = 60_000
+    refreshInterval: number = 60_000
 ): Unleash => {
     const { unleashServerUrl, baseUrl, unleashClientApiKey } = config;
     const unleash = initialize({
         url: unleashServerUrl,
-        refreshInterval: poll_interval,
+        refreshInterval: refreshInterval,
         appName: new URL(baseUrl).hostname,
         strategies: [new BaseUrlStrategy(baseUrl)],
         //to leverage reuse of HTTP connections
