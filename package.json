@@ -1,6 +1,6 @@
 {
     "name": "unleash-client-safe-security",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Unleash Client for Safe Security",
     "main": "lib/index.js",
     "types": "lib",
