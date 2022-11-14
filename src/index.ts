@@ -13,7 +13,7 @@ interface ConfigParams {
     readonly unleashServerUrl: string;
     readonly unleashClientApiKey: string;
     readonly unleashAppName: string;
-    parameter: ParameterConfig;
+    parameters: ParameterConfig;
 }
 
 const httpAgent = new http.Agent({
@@ -48,9 +48,9 @@ const getBaseUrl = (parameterConfig: ParameterConfig) => {
 class BaseUrlStrategy extends Strategy {
     parameterConfig: ParameterConfig;
 
-    constructor(parameter: ParameterConfig) {
+    constructor(parameters: ParameterConfig) {
         super("BaseUrl");
-        this.parameterConfig = parameter;
+        this.parameterConfig = parameters;
     }
 
     isEnabled(parameters: { baseUrl: string }): boolean {
@@ -84,14 +84,18 @@ export const getInstance = (
     config: ConfigParams,
     refreshInterval: number = 60_000
 ): Unleash => {
-    const { unleashServerUrl, unleashClientApiKey, unleashAppName, parameter } =
-        config;
+    const {
+        unleashServerUrl,
+        unleashClientApiKey,
+        unleashAppName,
+        parameters,
+    } = config;
 
     const unleash = initialize({
         url: unleashServerUrl,
         refreshInterval,
         appName: unleashAppName,
-        strategies: [new BaseUrlStrategy(parameter)],
+        strategies: [new BaseUrlStrategy(parameters)],
         //to leverage reuse of HTTP connections
         httpOptions: { agent: getDefaultAgent },
         customHeaders: {
