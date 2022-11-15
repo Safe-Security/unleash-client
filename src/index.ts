@@ -55,19 +55,7 @@ class BaseUrlStrategy extends Strategy {
 
     isEnabled(parameters: { baseUrl: string }): boolean {
         let tenantUrl = getBaseUrl(this.parameterConfig);
-        const { valueFromMethod } = this.parameterConfig.baseUrl;
-        if (
-            typeof valueFromMethod === "function" &&
-            typeof valueFromMethod<string>("baseUrl") === "string"
-        ) {
-            try {
-                tenantUrl = valueFromMethod<string>("baseUrl");
-            } catch (error) {
-                console.error("Error occurred while getting the the base URL", {
-                    error,
-                });
-            }
-        }
+
         const allowedList = new Set(
             parameters.baseUrl.split(",").map(url => url.trim().toLowerCase())
         );
