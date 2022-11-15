@@ -57,17 +57,16 @@ class BaseUrlStrategy extends Strategy {
     }
 
     isEnabled(parameters: { baseUrl: string }): boolean {
-        let tenantUrl = getBaseUrl(this.parameterConfig);
+        let url = getBaseUrl(this.parameterConfig);
 
         const allowedList = new Set(
             parameters.baseUrl.split(",").map(url => url.trim().toLowerCase())
         );
-        if (tenantUrl) {
-            const url = tenantUrl.toLowerCase();
-            const { hostname } = new URL(tenantUrl);
+        if (url) {
+            const { hostname } = new URL(url.toLowerCase());
             return allowedList.has(url) || allowedList.has(hostname);
         }
-        console.error("No Tenant URL can be found");
+        console.error("No base URL can be retrieved from the parameters");
         return false;
     }
 }
