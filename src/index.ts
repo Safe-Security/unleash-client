@@ -28,21 +28,24 @@ const getDefaultAgent = (url: URL) =>
     url.protocol === "https:" ? httpsAgent : httpAgent;
 
 const getBaseUrl = (parameterConfig: ParameterConfig) => {
-    let tenantUrl = parameterConfig.baseUrl.fallback;
+    let baseUrl = parameterConfig.baseUrl.fallback;
     const { valueFromMethod } = parameterConfig.baseUrl;
     if (
         typeof valueFromMethod === "function" &&
         typeof valueFromMethod<string>("baseUrl") === "string"
     ) {
         try {
-            tenantUrl = valueFromMethod<string>("baseUrl");
+            baseUrl = valueFromMethod<string>("baseUrl");
         } catch (error) {
-            console.error("Error occurred while getting the the base URL", {
-                error,
-            });
+            console.error(
+                "Error occurred while getting the base URL from the valueFromMethod",
+                {
+                    error,
+                }
+            );
         }
     }
-    return tenantUrl as string;
+    return baseUrl as string;
 };
 
 class BaseUrlStrategy extends Strategy {
@@ -64,6 +67,7 @@ class BaseUrlStrategy extends Strategy {
             const { hostname } = new URL(tenantUrl);
             return allowedList.has(url) || allowedList.has(hostname);
         }
+        console.error("No Tenant URL can be found");
         return false;
     }
 }
