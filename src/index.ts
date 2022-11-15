@@ -30,20 +30,20 @@ const getDefaultAgent = (url: URL) =>
 const getBaseUrl = (parameterConfig: ParameterConfig) => {
     let baseUrl = parameterConfig.baseUrl.fallback;
     const { valueFromMethod } = parameterConfig.baseUrl;
-    if (
-        typeof valueFromMethod === "function" &&
-        typeof valueFromMethod<string>("baseUrl") === "string"
-    ) {
-        try {
+    try {
+        if (
+            typeof valueFromMethod === "function" &&
+            typeof valueFromMethod<string>("baseUrl") === "string"
+        ) {
             baseUrl = valueFromMethod<string>("baseUrl");
-        } catch (error) {
-            console.error(
-                "Error occurred while getting the base URL from the valueFromMethod",
-                {
-                    error,
-                }
-            );
         }
+    } catch (error) {
+        console.error(
+            "Error occurred while getting the base URL from the valueFromMethod",
+            {
+                error,
+            }
+        );
     }
     return baseUrl as string;
 };
