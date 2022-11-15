@@ -39,10 +39,7 @@ const getBaseUrl = (parameterConfig: ParameterConfig) => {
         }
     } catch (error) {
         console.error(
-            "Error occurred while getting the base URL from the valueFromMethod",
-            {
-                error,
-            }
+            "Error occurred while getting the base URL from the valueFromMethod, using fallback value now!"
         );
     }
     return baseUrl as string;
