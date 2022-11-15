@@ -59,9 +59,20 @@ class BaseUrlStrategy extends Strategy {
         const allowedList = new Set(
             parameters.baseUrl.split(",").map(url => url.trim().toLowerCase())
         );
+        const allowedHostname = new Set<string>();
+
+        [...allowedList].forEach(url => {
+            try {
+                const hostname = new URL(url.toLowerCase().trim()).hostname;
+                allowedHostname.add(hostname);
+            } catch (error) {
+                error;
+            }
+        });
+
         if (url) {
-            const { hostname } = new URL(url.toLowerCase());
-            return allowedList.has(url) || allowedList.has(hostname);
+            const { hostname } = new URL(url.toLowerCase().trim());
+            return allowedList.has(url) || allowedHostname.has(hostname);
         }
         console.error("No base URL can be retrieved from the parameters");
         return false;
