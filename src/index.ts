@@ -27,6 +27,12 @@ const httpsAgent = new https.Agent({
 const getDefaultAgent = (url: URL) =>
     url.protocol === "https:" ? httpsAgent : httpAgent;
 
+/**
+ * It returns the baseUrl from the parameterConfig.baseUrl.fallback property if the valueFromMethod
+ * property is not a function or if the valueFromMethod function does not return a string
+ * @param {ParameterConfig} parameterConfig - ParameterConfig
+ * @returns A function that takes a parameterConfig object and returns baseUrl.
+ */
 const getBaseUrl = (parameterConfig: ParameterConfig) => {
     let baseUrl = parameterConfig.baseUrl.fallback;
     const { valueFromMethod } = parameterConfig.baseUrl;
@@ -59,20 +65,27 @@ class BaseUrlStrategy extends Strategy {
         const allowedList = new Set(
             parameters.baseUrl.split(",").map(url => url.trim().toLowerCase())
         );
+
         const allowedHostname = new Set<string>();
 
+        /* Trying to get the hostname from the url. */
         [...allowedList].forEach(url => {
             try {
-                const hostname = new URL(url.toLowerCase().trim()).hostname;
+                const { hostname } = new URL(url);
                 allowedHostname.add(hostname);
             } catch (error) {
                 error;
             }
         });
 
+        /* This is a check to see if the url is in the allowed list. */
         if (url) {
-            const { hostname } = new URL(url.toLowerCase().trim());
-            return allowedList.has(url) || allowedHostname.has(hostname);
+            const { hostname } = new URL(url);
+            return (
+                allowedList.has(url.trim().toLowerCase()) ||
+                allowedList.has(hostname) ||
+                allowedHostname.has(hostname)
+            );
         }
         console.error("No base URL can be retrieved from the parameters");
         return false;
