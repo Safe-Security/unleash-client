@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/Safe-Security/unleash-client/compare/v2.0.0...v2.0.1) (2022-11-20)
+
+
+### Bug Fixes
+
+* updated the http agent to correct one ([#16](https://github.com/Safe-Security/unleash-client/issues/16)) ([1b3a3bc](https://github.com/Safe-Security/unleash-client/commit/1b3a3bc40c92c8e9e75382a7e690cfa791a08f20))
+
 # [2.0.0](https://github.com/Safe-Security/unleash-client/compare/v1.0.2...v2.0.0) (2022-11-15)
 
 
