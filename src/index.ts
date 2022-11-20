@@ -1,5 +1,5 @@
 import * as http from "http";
-import * as https from "http";
+import * as https from "https";
 
 import { Strategy, initialize, Unleash } from "unleash-client";
 
