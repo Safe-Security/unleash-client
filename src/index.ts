@@ -43,9 +43,7 @@ const getBaseUrl = (parameterConfig: ParameterConfig) => {
         ) {
             baseUrl = valueFromMethod<string>("baseUrl");
         }
-    } catch (error) {
-       error;
-    }
+    } catch {}
     return baseUrl as string;
 };
 
