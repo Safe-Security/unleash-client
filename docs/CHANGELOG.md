@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/Safe-Security/unleash-client/compare/v2.0.1...v2.0.2) (2022-12-20)
+
+
+### Bug Fixes
+
+* removed error message ([#17](https://github.com/Safe-Security/unleash-client/issues/17)) ([f5bedc4](https://github.com/Safe-Security/unleash-client/commit/f5bedc425639fa14e6859aa637b96aae46cb7324))
+
 ## [2.0.1](https://github.com/Safe-Security/unleash-client/compare/v2.0.0...v2.0.1) (2022-11-20)
 
 
