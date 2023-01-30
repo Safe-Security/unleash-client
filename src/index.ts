@@ -28,23 +28,23 @@ const getDefaultAgent = (url: URL) =>
     url.protocol === "https:" ? httpsAgent : httpAgent;
 
 /**
- * It returns the baseUrl from the parameterConfig.baseUrl.fallback property if the valueFromMethod
+ * It returns the tenantUrl from the parameterConfig.tenantUrl.fallback property if the valueFromMethod
  * property is not a function or if the valueFromMethod function does not return a string
  * @param {ParameterConfig} parameterConfig - ParameterConfig
- * @returns A function that takes a parameterConfig object and returns baseUrl.
+ * @returns A function that takes a parameterConfig object and returns tenantUrl.
  */
-const getBaseUrl = (parameterConfig: ParameterConfig) => {
-    let baseUrl = parameterConfig.baseUrl.fallback;
-    const { valueFromMethod } = parameterConfig.baseUrl;
+const getTenantUrl = (parameterConfig: ParameterConfig) => {
+    let tenantUrl = parameterConfig.tenantUrl.fallback;
+    const { valueFromMethod } = parameterConfig.tenantUrl;
     try {
         if (
             typeof valueFromMethod === "function" &&
-            typeof valueFromMethod<string>("baseUrl") === "string"
+            typeof valueFromMethod<string>("tenantUrl") === "string"
         ) {
-            baseUrl = valueFromMethod<string>("baseUrl");
+            tenantUrl = valueFromMethod<string>("tenantUrl");
         }
     } catch {}
-    return baseUrl as string;
+    return tenantUrl as string;
 };
 
 class BaseUrlStrategy extends Strategy {
@@ -56,7 +56,7 @@ class BaseUrlStrategy extends Strategy {
     }
 
     isEnabled(parameters: { baseUrl: string }): boolean {
-        let url = getBaseUrl(this.parameterConfig);
+        let url = getTenantUrl(this.parameterConfig);
 
         const allowedList = new Set(
             parameters.baseUrl.split(",").map(url => url.trim().toLowerCase())
