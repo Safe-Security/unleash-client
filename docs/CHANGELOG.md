@@ -1,3 +1,15 @@
+# [3.0.0](https://github.com/Safe-Security/unleash-client/compare/v2.0.2...v3.0.0) (2023-01-30)
+
+
+### Features
+
+* Renamed baseUrl to tenantUrl ([#18](https://github.com/Safe-Security/unleash-client/issues/18)) ([38ca99d](https://github.com/Safe-Security/unleash-client/commit/38ca99dc8f7cc1a93b9d108e35aa7c2e27821ca8))
+
+
+### BREAKING CHANGES
+
+* baseUrl parameter has been renamed to tenantUrl to distinguish in a better way and not confuse with instance level URL
+
 ## [2.0.2](https://github.com/Safe-Security/unleash-client/compare/v2.0.1...v2.0.2) (2022-12-20)
 
 
