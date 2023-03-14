@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/Safe-Security/unleash-client/compare/v3.0.0...v3.1.0) (2023-03-14)
+
+
+### Features
+
+* support checking for fallback value in case feature toggle is false ([#20](https://github.com/Safe-Security/unleash-client/issues/20)) ([d86eb2d](https://github.com/Safe-Security/unleash-client/commit/d86eb2db35a4515ba5f001bd5c6f1298a90fbea3))
+
 # [3.0.0](https://github.com/Safe-Security/unleash-client/compare/v2.0.2...v3.0.0) (2023-01-30)
 
 
