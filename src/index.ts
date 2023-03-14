@@ -93,15 +93,11 @@ class BaseUrlStrategy extends Strategy {
                 allowedList.has(hostname) ||
                 allowedHostname.has(hostname);
 
-            if (
-                !result &&
-                this.parameterConfig.alternateUrl &&
-                this.parameterConfig.alternateUrl.fallback
-            ) {
-                const alternateUrl = this.parameterConfig.alternateUrl.fallback;
-                const { hostname } = new URL(alternateUrl);
+            if (!result && this.parameterConfig.tenantUrl.fallback) {
+                const fallbackUrl = this.parameterConfig.tenantUrl.fallback;
+                const { hostname } = new URL(fallbackUrl);
                 return (
-                    allowedList.has(alternateUrl.trim().toLowerCase()) ||
+                    allowedList.has(fallbackUrl.trim().toLowerCase()) ||
                     allowedList.has(hostname) ||
                     allowedHostname.has(hostname)
                 );
