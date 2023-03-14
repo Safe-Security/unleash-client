@@ -35,12 +35,19 @@ const unleash = getInstance({
 
 In Typescript:
 
-```js
+```typescript
 import { getInstance } from "unleash-client-safe-security";
 
 const unleash = getInstance({
   unleashServerUrl: <unleash-url>,
     baseUrl: <app-url>,
     unleashClientApiKey: "zaCELgL.0imfnc8mVLWwsAawjYr4Rx-Af50DDqtlx",
+    unleashAppName: "my-app.com",
+    parameters: {
+       tenantUrl: {
+         valueFromMethod: getTenantUrl(),
+         fallback: process.env.TENANT_URL
+       }
+    }
 });
 ```
