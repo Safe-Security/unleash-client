@@ -7,10 +7,15 @@ interface ParameterConfig {
     /**
      * TODO: This should also support a static value
      */
-    [key: string]: {
-        valueFromMethod: <T>(arg: string) => T;
-        fallback?: string;
-    };
+    [key: string]:
+        | {
+              valueFromMethod: <T>(arg: string) => T;
+              fallback?: string;
+          }
+        | {
+              valueFromMethod?: <T>(arg: string) => T;
+              fallback: string;
+          };
 }
 interface ConfigParams {
     readonly unleashServerUrl: string;
