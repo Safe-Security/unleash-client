@@ -4,6 +4,9 @@ import * as https from "https";
 import { Strategy, initialize, Unleash } from "unleash-client";
 
 interface ParameterConfig {
+    /**
+     * TODO: This should also support a static value
+     */
     [key: string]: {
         valueFromMethod: <T>(arg: string) => T;
         fallback?: string;
@@ -56,6 +59,9 @@ class BaseUrlStrategy extends Strategy {
     }
 
     isEnabled(parameters: { baseUrl: string }): boolean {
+        /**
+         * TODO: This should be a generalized method to get any parameter
+         */
         let url = getTenantUrl(this.parameterConfig);
 
         const allowedList = new Set(
@@ -77,12 +83,24 @@ class BaseUrlStrategy extends Strategy {
         /* This is a check to see if the url is in the allowed list. */
         if (url) {
             const { hostname } = new URL(url);
-            return (
+            const result =
                 allowedList.has(url.trim().toLowerCase()) ||
                 allowedList.has(hostname) ||
-                allowedHostname.has(hostname)
-            );
+                allowedHostname.has(hostname);
+
+            if (!result && this.parameterConfig.tenantUrl.fallback) {
+                const fallbackUrl = this.parameterConfig.tenantUrl.fallback;
+                const { hostname } = new URL(fallbackUrl);
+                return (
+                    allowedList.has(fallbackUrl.trim().toLowerCase()) ||
+                    allowedList.has(hostname) ||
+                    allowedHostname.has(hostname)
+                );
+            }
+
+            return result;
         }
+
         console.error("No base URL can be retrieved from the parameters");
         return false;
     }
