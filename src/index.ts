@@ -128,5 +128,8 @@ export const getInstance = (
             Authorization: unleashClientApiKey,
         },
     });
+
+    unleash?.on("error", console.error);
+
     return unleash;
 };
