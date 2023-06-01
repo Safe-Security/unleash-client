@@ -20,11 +20,11 @@ interface ConfigParams {
 }
 
 const httpAgent = new http.Agent({
-    keepAlive: true
+    keepAlive: true,
 });
 
 const httpsAgent = new https.Agent({
-    keepAlive: true
+    keepAlive: true,
 });
 
 const getDefaultAgent = (url: URL) =>
@@ -114,7 +114,7 @@ export const getInstance = (
         unleashServerUrl,
         unleashClientApiKey,
         unleashAppName,
-        parameters
+        parameters,
     } = config;
 
     const unleash = initialize({
@@ -125,8 +125,8 @@ export const getInstance = (
         //to leverage reuse of HTTP connections
         httpOptions: { agent: getDefaultAgent },
         customHeaders: {
-            Authorization: unleashClientApiKey
-        }
+            Authorization: unleashClientApiKey,
+        },
     });
 
     unleash?.on("error", console.error);
