@@ -129,7 +129,10 @@ export const getInstance = (
         },
     });
 
-    unleash?.on("error", console.error);
+    unleash?.on("error", (error: Error) => {
+        console.error(error.message);
+    });
+
 
     return unleash;
 };
