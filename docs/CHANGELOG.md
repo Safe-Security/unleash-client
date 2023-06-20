@@ -1,3 +1,10 @@
+## [3.1.2](https://github.com/Safe-Security/unleash-client/compare/v3.1.1...v3.1.2) (2023-06-20)
+
+
+### Bug Fixes
+
+* **unleash:** Update error log to include only the message ([#22](https://github.com/Safe-Security/unleash-client/issues/22)) ([627ca42](https://github.com/Safe-Security/unleash-client/commit/627ca429190bd74f37d259e1f8be46f030bd3e1a))
+
 ## [3.1.1](https://github.com/Safe-Security/unleash-client/compare/v3.1.0...v3.1.1) (2023-06-01)
 
 
