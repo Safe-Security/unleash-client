@@ -133,6 +133,6 @@ export const getInstance = (
         console.error(error.message);
     });
 
-
+    
     return unleash;
 };

@@ -1,3 +1,10 @@
+## [3.1.1](https://github.com/Safe-Security/unleash-client/compare/v3.1.0...v3.1.1) (2023-06-01)
+
+
+### Bug Fixes
+
+* **unleash-client:** Added event listener on the error events ([#21](https://github.com/Safe-Security/unleash-client/issues/21)) ([7e99b5a](https://github.com/Safe-Security/unleash-client/commit/7e99b5a4c870f46127cb46fe55ac6faeaeb01517))
+
 # [3.1.0](https://github.com/Safe-Security/unleash-client/compare/v3.0.0...v3.1.0) (2023-03-14)
 
 
