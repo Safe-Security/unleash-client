@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/Safe-Security/unleash-client/compare/v3.1.2...v3.2.0) (2023-07-05)
+
+
+### Features
+
+* bump unleash-client to v3.2.1 ([41a263a](https://github.com/Safe-Security/unleash-client/commit/41a263a6f2675422b74eaab95020e7e2d2fe0136))
+
 ## [3.1.2](https://github.com/Safe-Security/unleash-client/compare/v3.1.1...v3.1.2) (2023-06-20)
 
 
