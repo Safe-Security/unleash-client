@@ -133,6 +133,40 @@ export const getInstance = (
         console.error(error.message);
     });
 
-    
     return unleash;
 };
+
+const DEFAULT_READY_TIMEOUT_MS = 5_000;
+
+export const getInstanceAsync = async (
+    config: ConfigParams,
+    refreshInterval: number = 60_000
+): Promise<Unleash> => {
+    const unleash = getInstance(config, refreshInterval);
+
+    await new Promise<void>(resolve => {
+        if (unleash.isSynchronized()) {
+            console.log("Unleash client already synchronized");
+            resolve();
+            return;
+        }
+
+        const timeout = setTimeout(() => {
+            console.warn(
+                "Unleash client not ready after timeout, proceeding with empty cache"
+            );
+            resolve();
+        }, DEFAULT_READY_TIMEOUT_MS);
+
+        unleash.on("ready", () => {
+            clearTimeout(timeout);
+            console.log("Unleash client ready, feature toggles loaded");
+            resolve();
+        });
+    });
+
+    return unleash;
+};
+
+export { Unleash } from "unleash-client";
+export type { ConfigParams };
