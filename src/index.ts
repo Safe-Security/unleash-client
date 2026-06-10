@@ -140,7 +140,8 @@ const DEFAULT_READY_TIMEOUT_MS = 5_000;
 
 export const getInstanceAsync = async (
     config: ConfigParams,
-    refreshInterval: number = 60_000
+    refreshInterval: number = 60_000,
+    readyTimeoutMs: number = DEFAULT_READY_TIMEOUT_MS
 ): Promise<Unleash> => {
     const unleash = getInstance(config, refreshInterval);
 
@@ -151,18 +152,21 @@ export const getInstanceAsync = async (
             return;
         }
 
+        const onReady = () => {
+            clearTimeout(timeout);
+            console.log("Unleash client ready, feature toggles loaded");
+            resolve();
+        };
+
         const timeout = setTimeout(() => {
+            unleash.off("ready", onReady);
             console.warn(
                 "Unleash client not ready after timeout, proceeding with empty cache"
             );
             resolve();
-        }, DEFAULT_READY_TIMEOUT_MS);
+        }, readyTimeoutMs);
 
-        unleash.on("ready", () => {
-            clearTimeout(timeout);
-            console.log("Unleash client ready, feature toggles loaded");
-            resolve();
-        });
+        unleash.once("ready", onReady);
     });
 
     return unleash;
