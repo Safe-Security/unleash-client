@@ -129,9 +129,11 @@ export const getInstance = (
         },
     });
 
-    unleash?.on("error", (error: Error) => {
-        console.error(error.message);
-    });
+    if (unleash.listenerCount("error") === 0) {
+        unleash.on("error", (error: Error) => {
+            console.error(error.message);
+        });
+    }
 
     return unleash;
 };
@@ -139,8 +141,8 @@ export const getInstance = (
 const DEFAULT_READY_TIMEOUT_MS = 5_000;
 
 /**
- * Policy for what getInstanceAsync does when the Unleash client fails to become
- * ready within the timeout:
+ * Policy for what getInstanceAsync does when the Unleash client fails to
+ * synchronize with the server within the timeout:
  *   - "throw": reject with UnleashReadyTimeoutError so the caller can decide to
  *     fail startup (fail-fast). The library never calls process.exit itself.
  *   - "proceed": resolve with the client anyway, whose cache is empty so every
@@ -151,7 +153,7 @@ export type OnReadyTimeout = "throw" | "proceed";
 export class UnleashReadyTimeoutError extends Error {
     constructor(readyTimeoutMs: number) {
         super(
-            `Unleash client not ready after ${readyTimeoutMs}ms; refusing to proceed with empty feature-flag cache`
+            `Unleash client not synchronized after ${readyTimeoutMs}ms; refusing to proceed with empty feature-flag cache`
         );
         this.name = "UnleashReadyTimeoutError";
     }
@@ -172,25 +174,25 @@ export const getInstanceAsync = async (
             return;
         }
 
-        const onReady = () => {
+        const onSynchronized = () => {
             clearTimeout(timeout);
-            console.log("Unleash client ready, feature toggles loaded");
+            console.log("Unleash client synchronized, feature toggles loaded");
             resolve();
         };
 
         const timeout = setTimeout(() => {
-            unleash.off("ready", onReady);
+            unleash.off("synchronized", onSynchronized);
             if (onTimeout === "throw") {
                 reject(new UnleashReadyTimeoutError(readyTimeoutMs));
                 return;
             }
             console.warn(
-                "Unleash client not ready after timeout, proceeding with empty cache"
+                "Unleash client not synchronized after timeout, proceeding with empty cache"
             );
             resolve();
         }, readyTimeoutMs);
 
-        unleash.once("ready", onReady);
+        unleash.once("synchronized", onSynchronized);
     });
 
     return unleash;
