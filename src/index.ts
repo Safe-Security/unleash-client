@@ -138,14 +138,34 @@ export const getInstance = (
 
 const DEFAULT_READY_TIMEOUT_MS = 5_000;
 
+/**
+ * Policy for what getInstanceAsync does when the Unleash client fails to become
+ * ready within the timeout:
+ *   - "throw": reject with UnleashReadyTimeoutError so the caller can decide to
+ *     fail startup (fail-fast). The library never calls process.exit itself.
+ *   - "proceed": resolve with the client anyway, whose cache is empty so every
+ *     isEnabled() returns false until the next successful refresh (fail-open).
+ */
+export type OnReadyTimeout = "throw" | "proceed";
+
+export class UnleashReadyTimeoutError extends Error {
+    constructor(readyTimeoutMs: number) {
+        super(
+            `Unleash client not ready after ${readyTimeoutMs}ms; refusing to proceed with empty feature-flag cache`
+        );
+        this.name = "UnleashReadyTimeoutError";
+    }
+}
+
 export const getInstanceAsync = async (
     config: ConfigParams,
     refreshInterval: number = 60_000,
-    readyTimeoutMs: number = DEFAULT_READY_TIMEOUT_MS
+    readyTimeoutMs: number = DEFAULT_READY_TIMEOUT_MS,
+    onTimeout: OnReadyTimeout = "throw"
 ): Promise<Unleash> => {
     const unleash = getInstance(config, refreshInterval);
 
-    await new Promise<void>(resolve => {
+    await new Promise<void>((resolve, reject) => {
         if (unleash.isSynchronized()) {
             console.log("Unleash client already synchronized");
             resolve();
@@ -160,6 +180,10 @@ export const getInstanceAsync = async (
 
         const timeout = setTimeout(() => {
             unleash.off("ready", onReady);
+            if (onTimeout === "throw") {
+                reject(new UnleashReadyTimeoutError(readyTimeoutMs));
+                return;
+            }
             console.warn(
                 "Unleash client not ready after timeout, proceeding with empty cache"
             );
