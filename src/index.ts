@@ -159,6 +159,15 @@ export class UnleashReadyTimeoutError extends Error {
     }
 }
 
+/**
+ * Returns an Unleash client that has synchronized with the server, so the
+ * first isEnabled() call reflects real toggles instead of an empty cache.
+ *
+ * Note on connection errors: an Unleash "error" event (e.g. ECONNREFUSED) does
+ * NOT reject this promise early — it is logged by the error handler and the
+ * client keeps retrying. The promise only settles when the client synchronizes
+ * or the readyTimeoutMs elapses, at which point the onTimeout policy applies.
+ */
 export const getInstanceAsync = async (
     config: ConfigParams,
     refreshInterval: number = 60_000,
